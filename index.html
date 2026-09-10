@@ -1,102 +1,633 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Creative portfolio website">
-  <title>Kakashijoy — Creative Portfolio</title>
+  <title>kakashijoy — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: #111319;
+      --card-border: #1d212c;
+      --accent: #22c55e;
+      --accent-glow: rgba(34, 197, 94, 0.15);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    .glow-bg {
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, rgba(9, 10, 15, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 80px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        grid-template-columns: 1.4fr 0.6fr;
+        align-items: center;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 50px;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Stats Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hero-graphic {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circle-avatar {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #1a221e 0%, #0d1210 100%);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      position: relative;
+      box-shadow: 0 0 50px rgba(34, 197, 94, 0.1);
+    }
+
+    /* Info Bar / Pills Section */
+    .info-bar {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 40px 0;
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 60px;
+    }
+
+    @media (min-width: 768px) {
+      .info-bar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .info-group h4 {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+    }
+
+    /* Works Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 30px;
+    }
+
+    .section-title-wrap h3 {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .section-title-wrap h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      max-width: 340px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Works Grid */
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    @media (min-width: 768px) {
+      .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .work-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .work-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 197, 94, 0.4);
+    }
+
+    .work-preview {
+      height: 220px;
+      background-color: #0d0f14;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .work-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+
+    .work-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .work-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .work-tag {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 16px;
+    }
+
+    /* CTA Section */
+    .cta-card {
+      background: linear-gradient(135deg, #0d1a12 0%, #090a0f 100%);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 20px;
+      padding: 50px 30px;
+      margin-bottom: 80px;
+    }
+
+    .cta-card h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 40px 0 60px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+  </style>
 </head>
 <body>
-  <div class="cursor-glow"></div>
 
-  <header class="site-header">
-    <a class="brand" href="#">
-      <span class="status-dot"></span>
-      <span>Kakashijoy</span>
-    </a>
-    <button class="menu" aria-label="Open menu"><span></span><span></span></button>
-  </header>
+  <div class="glow-bg"></div>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="eyebrow"><span class="tiny-dot"></span> AVAILABLE TO WORK FOR YOU </div>
-      <h1>Designing<br><em>Editing.</em></h1>
-      <p class="intro">
-        Have experience in digital art, Anime short,amv editing, also at anime Dubbing.
-        and also good at taking natural photography.
-      </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#work">View selected work <span>↗</span></a>
-        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <a href="#" class="logo">kakashijoy</a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Available for select projects
+        </div>
+        <h1>Creative Artwork.</h1>
+        <p>creating stuff that makes you interested in something that i like to do.</p>
+        
+        <div class="btn-group">
+          <a href="#contact" class="btn-primary">Get in touch</a>
+          <a href="#works" class="btn-secondary">View work</a>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">2023</div>
+            <div class="stat-label">Creating Since</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Years Of Experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">00</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+        </div>
       </div>
 
-      <div class="stats">
-        <article class="stat-card">
-          <strong>2023</strong>
-          <span>Creating since</span>
-        </article>
-        <article class="stat-card">
-          <strong>5+</strong>
-          <span>Creative disciplines</span>
-        </article>
-        <article class="stat-card">
-          <strong>∞</strong>
-          <span>Ideas in progress</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="work">
-      <div class="section-heading">
-        <span>01 — SELECTED WORK</span>
-        <h2>Things I've<br><em>made.</em></h2>
-      </div>
-      <div class="projects">
-        <a class="project project-a" href="#">
-          <div class="project-number">01</div>
-          <div class="project-info"><h3>Neon System</h3><p>Brand identity · Visual design</p></div>
-          <span class="arrow">↗</span>
-        </a>
-        <a class="project project-b" href="#">
-          <div class="project-number">02</div>
-          <div class="project-info"><h3>Digital Motion</h3><p>Motion · Creative technology</p></div>
-          <span class="arrow">↗</span>
-        </a>
-        <a class="project project-c" href="#">
-          <div class="project-number">03</div>
-          <div class="project-info"><h3>Night Interface</h3><p>UI/UX · Digital experience</p></div>
-          <span class="arrow">↗</span>
-        </a>
+      <div class="hero-graphic">
+        <div class="circle-avatar"></div>
       </div>
     </section>
 
-    <section class="section about" id="about">
-      <div class="section-heading"><span>02 — ABOUT</span></div>
-      <div class="about-grid">
-        <h2>Creative work<br>with <em>purpose.</em></h2>
-        <div>
-          <p>I create digital anime manga drawing for fun and anime dubbed videos, also anime amv Short edits. Also some anime graphics Desgins.</p>
-          <p>From visual identities to interactive interfaces, I like turning simple ideas into memorable work.</p>
+    <!-- Info Bar -->
+    <section class="info-bar">
+      <div class="info-group">
+        <h4>A Selection Of Skills</h4>
+        <div class="pill-list">
+          <span class="pill">Motion Graphics</span>
+          <span class="pill">Video Editing</span>
+          <span class="pill">Digital Art</span>
+          <span class="pill">Branding</span>
+          <span class="pill">Visual Design</span>
+        </div>
+      </div>
+      <div class="info-group">
+        <h4>A Selection Of Tools I Use With</h4>
+        <div class="pill-list">
+          <span class="pill">Photoshop</span>
+          <span class="pill">After Effects</span>
+          <span class="pill">Premiere Pro</span>
+          <span class="pill">Figma</span>
         </div>
       </div>
     </section>
 
-    <section class="contact" id="contact">
-      <span>03 — CONTACT</span>
-      <h2>Have an idea?<br><em>Let's build it.</em></h2>
-      <a class="contact-link" href="mailto:hello@example.com">hello@example.com ↗</a>
+    <!-- Works Section -->
+    <section id="works">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h3>Selected Works</h3>
+          <h2>My Works.</h2>
+        </div>
+        <p class="section-desc">
+          A design collection of motion graphics, digital art, and creative technology projects.
+        </p>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Motion Graphics</button>
+        <button class="filter-btn">Video Editing</button>
+        <button class="filter-btn">Branding</button>
+        <button class="filter-btn">Digital Art</button>
+        <button class="filter-btn">Visual Design</button>
+      </div>
+
+      <div class="works-grid">
+        <!-- Work 1 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Creative Intro Reel</div>
+              <p class="work-desc">Showcasing dynamic visual compositions and motion graphics technique.</p>
+            </div>
+            <span class="work-tag">Motion Design</span>
+          </div>
+        </div>
+
+        <!-- Work 2 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Motion Graphics & Video Editing</div>
+              <p class="work-desc">High-impact videos, creative motion graphics, and clean cuts for brand engagement.</p>
+            </div>
+            <span class="work-tag">Video Production</span>
+          </div>
+        </div>
+
+        <!-- Work 3 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Digital Art & Illustrations</div>
+              <p class="work-desc">Targeted visual elements and artwork created to express creative ideas and aesthetics.</p>
+            </div>
+            <span class="work-tag">Digital Art</span>
+          </div>
+        </div>
+
+        <!-- Work 4 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Club & Organization Projects</div>
+              <p class="work-desc">Visual identity and assets for clubs and non-profit organizations.</p>
+            </div>
+            <span class="work-tag">Branding</span>
+          </div>
+        </div>
+
+        <!-- Work 5 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Logo Design & Brand Marks</div>
+              <p class="work-desc">Custom logos, brand marks, and visual identifiers tailored to modern brands.</p>
+            </div>
+            <span class="work-tag">Branding</span>
+          </div>
+        </div>
+
+        <!-- Work 6 -->
+        <div class="work-card">
+          <div class="work-preview"></div>
+          <div class="work-content">
+            <div>
+              <div class="work-title">Social Media Posts & Campaigns</div>
+              <p class="work-desc">Engaging social media graphics, promotion design, and content templates.</p>
+            </div>
+            <span class="work-tag">Visual Design</span>
+          </div>
+        </div>
+      </div>
     </section>
-  </main>
 
-  <footer>
-    <span>© 2026 Kakashijoy </span>
-    <span>Made with HTML · CSS · JS</span>
-  </footer>
+    <!-- Call to Action Section -->
+    <section id="contact">
+      <div class="cta-card">
+        <span class="badge" style="margin-bottom: 12px;">Work With Me</span>
+        <h2>Have an idea worth building?</h2>
+        <div class="btn-group" style="margin-bottom: 0;">
+          <a href="mailto:contact@example.com" class="btn-primary">Get in touch</a>
+          <a href="#" class="btn-secondary">LinkedIn</a>
+        </div>
+      </div>
+    </section>
 
-  <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="info-group">
+          <h4>A Selection Of Skills</h4>
+          <div class="pill-list">
+            <span class="pill">Motion Graphics</span>
+            <span class="pill">Video Editing</span>
+            <span class="pill">Digital Art</span>
+            <span class="pill">Branding</span>
+          </div>
+        </div>
+        <div class="info-group">
+          <h4>A Selection Of Tools I Use With</h4>
+          <div class="pill-list">
+            <span class="pill">Photoshop</span>
+            <span class="pill">After Effects</span>
+            <span class="pill">Premiere Pro</span>
+            <span class="pill">Figma</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© kakashijoy — All Rights Reserved</span>
+        <span>Designed & Developed</span>
+      </div>
+    </footer>
+  </div>
+
 </body>
 </html>
