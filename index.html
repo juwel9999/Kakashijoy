@@ -522,16 +522,24 @@
 
       <div class="works-grid">
         <!-- Work 1 -->
-        <div class="work-card">
-          <div class="work-preview"></div>
-          <div class="work-content">
-            <div>
-              <div class="work-title">Creative Intro Reel</div>
-              <p class="work-desc">Showcasing dynamic visual compositions and motion graphics technique.</p>
-            </div>
-            <span class="work-tag">Digital Art</span>
-          </div>
-        </div>
+  <div class="card" onclick="openModal('https://freeimage.host/i/nqa93Av')">
+    <div class="card-media">
+    <img class="card-img" src="https://freeimage.host/i/nqaHMrX" alt="Photo">
+  </div>
+
+  <div class="card-content">
+    <h3 class="card-title">My Artwork</h3>
+    <p class="card-description">My artwork collection.</p>
+    <span class="card-tag">Artwork</span>
+  </div>
+</div>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <span class="close-btn">&times;</span>
+  <div class="modal-content">
+    <img id="modalImage" src="" alt="">
+  </div>
+</div>
 
         <!-- Work 2 -->
         <div class="work-card">
@@ -541,7 +549,7 @@
               <div class="work-title">Video Editing</div>
               <p class="work-desc">High-impact videos, creative motion graphics, and clean cuts for brand engagement.</p>
             </div>
-            <span class="work-tag">Picture Editing</span>
+            <span class="work-tag">Editing</span>
           </div>
         </div>
 
